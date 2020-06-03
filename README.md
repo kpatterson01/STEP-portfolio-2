@@ -1,6 +1,9 @@
 # Google Student Training in Engineering Program
 
-This repo contains the projects you'll work on for the first half of STEP.
+This repo contains Kayla's portfolio and SPS projects during her Google STEP Internship.
+This repo contains the updated files from the step.git repository unlike the previous repo (STEP-portfolio-1). 
+This repo starts at week 3, find week 1 and 2 at https://github.com/kpatterson01/STEP-portfolio-1
+
 This work is based on the [Google Software Product Sprint](https://g.co/softwareproductsprint) program.
 
 To get started:
