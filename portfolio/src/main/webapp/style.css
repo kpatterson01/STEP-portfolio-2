@@ -168,6 +168,14 @@ body,html {
     align-content: center; 
 }
 
+#comment-link {
+    text-align: center; 
+}
+
+#comment-link a {
+    color: black; 
+}
+
 footer {
     position: static;
     left: 0;
