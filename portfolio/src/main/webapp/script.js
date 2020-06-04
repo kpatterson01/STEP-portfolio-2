@@ -14,9 +14,11 @@
 
 /**
  * Changes color of cover title using random method 
- */
-var mouseOverColor = document.getElementById("changeColor").addEventListener("mouseover", isColor);
-var mouseOutColor = document.getElementById("changeColor").addEventListener("mouseout", isColor);
+ 
+
+    var mouseOverColor = document.getElementById("changeColor").addEventListener("mouseover", isColor);
+    var mouseOutColor = document.getElementById("changeColor").addEventListener("mouseout", isColor);
+**/
 
 function isColor() {
     const color =
@@ -47,7 +49,8 @@ function addRandomFact() {
  * Adds a comment from the server 
  */
 function getComment() {
-  fetch('/comment').then(response => response.text()).then((comment) => {
+  fetch('/comment').then(response => response.json()).then((comment) => {
     document.getElementById('comment-container').innerHTML = comment;
+    console.log(comment); 
   });
 }

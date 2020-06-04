@@ -13,7 +13,7 @@
 // limitations under the License.
 
 package com.google.sps.servlets;
-
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +27,40 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comment")
 public class DataServlet extends HttpServlet {
 
-  private List<String> comments;
-
+  private ArrayList<String> comments;
+ /*
   @Override
   public void init() {
     comments = new ArrayList<>();
-    comments.add("This is a comment from a server!");
-    comments.add("This is another comment from a server!");
-  }
+    comments.add("Comment number 1 from Server!");
+    comments.add("Comment number 2 from server!");
+    comments.add("Comment number 3 from server!");
+  }*/
   
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = comments.get((int) (Math.random() * comments.size()));
-    response.setContentType("text/html;");
-    
-    response.getWriter().println(comment);
+    //String comment = comments.get((int) (Math.random() * comments.size()));
+    comments = new ArrayList<>();
+    comments.add("Comment number 1 from Server!");
+    comments.add("Comment number 2 from server!");
+    comments.add("Comment number 3 from server!");
+
+    // Convert the server stats to JSON
+    String json = convertToJsonUsingGson(comments);
+
+    // Send the JSON as the response
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+
+  /**
+   * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
+   * the Gson library dependency to pom.xml.
+   */
+  private String convertToJsonUsingGson(ArrayList comments) {
+    Gson gson = new Gson();
+    String json = gson.toJson(comments);
+    return json;
   }
 }
