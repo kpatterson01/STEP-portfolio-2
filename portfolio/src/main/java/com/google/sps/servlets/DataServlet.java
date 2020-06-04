@@ -15,18 +15,33 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+
+/** Servlet that returns a random comment data*/
+@WebServlet("/comment")
 public class DataServlet extends HttpServlet {
 
+  private List<String> comments;
+
+  @Override
+  public void init() {
+    comments = new ArrayList<>();
+    comments.add("This is a comment from a server!");
+    comments.add("This is another comment from a server!");
+  }
+  
+  
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String comment = comments.get((int) (Math.random() * comments.size()));
     response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Kayla!</h1>");
+    
+    response.getWriter().println(comment);
   }
 }
