@@ -50,7 +50,17 @@ function addRandomFact() {
  */
 function getComment() {
   fetch('/comment').then(response => response.json()).then((comment) => {
-    document.getElementById('comment-container').innerHTML = comment;
-    console.log(comment); 
+    // Build the list of comment entries.
+    const historyEl = document.getElementById('history');
+    comment.history.forEach((line) => {
+      historyEl.appendChild(createListElement(line));
+    });
   });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
