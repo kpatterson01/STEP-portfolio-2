@@ -23,13 +23,26 @@ import java.util.List;
  * <p>Note: The private variables in this class are converted into JSON.
  */
 public class CommentData {
+    //Attributes 
+    public String firstName; 
+    public String lastName; 
+    public String relation; 
+    public String years; 
+    public String comment; 
 
-  /** List of comment details log */
-  private final List<String> commentLog = new ArrayList<>();
+    private final List<String> commentHistory = new ArrayList<>();
 
-  /** Log in information of each comment */ 
-  public void logComments(String firstName, String lastName, String relation, String years, String comment) {  
-    commentLog.add(firstName + " " + lastName + ": " + relation + ": " + years + " year relationship"); 
-    commentLog.add("Comment: " + comment);
-  }
+    //Constructor 
+    public CommentData(String firstName, String lastName, 
+                        String relation, String years, String comment) {
+        this.firstName = firstName; 
+        this.lastName = lastName; 
+        this.relation = relation; 
+        this.years = years; 
+        this.comment = comment; 
+    }
+
+    public void logComment(String name) { 
+        commentHistory.add(name); 
+    }
 }
