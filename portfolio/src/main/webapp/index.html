@@ -6,9 +6,9 @@
     <title>Kayla Patterson</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <!--<script src="script.js"></script>-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6AxuefQv6sbT-WwW9bGDnoEacGtLDxvk"></script>
   </head>
-  <body>
+  <body onload="createMap()";>
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">Kayla Patterson</a>
         <button class="navbar-toggler navbar-light bg-light" type="button" data-toggle="collapse" data-target="#navbarAlt" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,6 +176,7 @@
         </div>
     </section> 
     <section id="contact">
+        <div id="map"></div>
         <div id="contact-title">
             <h1>Contact Me</h1>
             <p>Thank you for visiting my website! Please feel free to connect with me, I am always looking for 
