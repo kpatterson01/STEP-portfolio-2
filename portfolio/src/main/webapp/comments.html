@@ -8,8 +8,9 @@
     <script src="script.js"></script>
   </head>
   <body onload="getComment()">
-        <h1 id="comments">Comments about Kayla L. Patterson</h1>
-        <form action="" class="comment-form" method="POST">
+        <a href="index.html">>> Go Back</a>
+        <h1 id="title">Comments about Kayla L. Patterson</h1>
+        <form action="/comment" class="comment-form" method="POST">
             <div class="row">
                 <div class="col">
                     <label for="firstname">First Name</label>
@@ -22,30 +23,35 @@
             </div>
             <label for="years">How many years have you known Kayla?</label>
             <select name="years" id="years" class="form-control">
-                <option value="1yr">1 year</option>
-                <option value="2yr">2 year</option>
-                <option value="3yr">3 year</option>
-                <option value="more3">More than 3 years</option>
+                 <option value="1 year">1 year</option>
+                 <option value="2 year">2 year</option>
+                 <option value="3 year">3 year</option>
+                <option value="+3 years">More than 3 years</option>
             </select>
             <label for="relation">Relationship</label>
             <select name="relation" id="relation" class="form-control">
-                <option value="manager">Manager</option>
-                <option value="mentor">Mentor</option>
-                <option value="professor">Professor</option>
-                <option value="mentee">Mentee</option>
-                <option value="friend">Friend</option>
+                <option value="Manager">Manager</option>
+                <option value="Mentor">Mentor</option>
+                <option value="Professor">Professor</option>
+                <option value="Mentee">Mentee</option>
+                <option value="Friend">Friend</option>
             </select>
             <div class="form-group">
                 <label for="CommentTextarea">Comment</label>
-                <textarea name="comment-input" class="form-control"  id="CommentTextarea" rows="5" placeholder="Type Comment here"></textarea>
+                <textarea class="form-control"  name="comment-input" id="CommentTextarea" rows="5" placeholder="Type Comment here"></textarea>
             </div>
-            <input type="submit" />
+            <input type="submit" class="btn btn-primary"/>
         </form>
-    
-        <!--<button onclick="getComment()" class="btn btn-primary">Comments</button>-->
-        <div id="comment-container">
-        <ul id="history"></ul>
-
+        <div id="comment-section">
+            <h2 id="comment-title">~Comments~</h2>
+            <div class="scroll-box">
+                <ul id="comment-container"></ul>
+            </div>
+        </div>
+      
+    <footer>
+        <p>Website created by Kayla L. Patterson</p>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
