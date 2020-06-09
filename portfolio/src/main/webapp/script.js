@@ -46,21 +46,28 @@ function addRandomFact() {
 }
 
 /**
- * Adds a comment from the server 
+ * Adds the object comment from the server 
  */
 function getComment() {
   fetch('/comment').then(response => response.json()).then((comment) => {
-    // Build the list of comment entries.
-    const historyEl = document.getElementById('history');
-    comment.history.forEach((line) => {
-      historyEl.appendChild(createListElement(line));
-    });
+    document.getElementById('comment-container').appendChild(createListElement(comment));  
+    console.log(comment); 
   });
 }
 
-/** Creates an <li> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+/**
+ * Creates an <div> element containing data from CommentData object 
+ * Create a node that is linked to the CommentData objects 
+ */
+function createListElement(comment) {
+    const node = document.createElement("li");
+    for (let i = 0; i < comment.length; i++) {
+        const tempNode = document.createElement("ul"); 
+        tempNode.innerText = comment[i].firstName + " " + comment[i].lastName 
+                            + " ~ Relationship: " + comment[i].relation + " " 
+                            + " ~ Known Kayla for " + comment[i].years + "\nComment: " 
+                            +  comment[i].comment; 
+        node.appendChild(tempNode);
+    }
+    return node; 
 }

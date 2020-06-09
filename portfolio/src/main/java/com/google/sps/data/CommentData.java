@@ -14,35 +14,23 @@
 
 package com.google.sps.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Class representing the subtraction game, where players take turns subtracting from 21 to reach 0.
- *
- * <p>Note: The private variables in this class are converted into JSON.
- */
 public class CommentData {
     //Attributes 
     public String firstName; 
     public String lastName; 
     public String relation; 
     public String years; 
-    public String comment; 
-
-    private final List<String> commentHistory = new ArrayList<>();
-
+    public String comment;
+    private final long timestamp;
+    
     //Constructor 
     public CommentData(String firstName, String lastName, 
-                        String relation, String years, String comment) {
+                        String years, String relation, String comment, long timestamp) {
         this.firstName = firstName; 
         this.lastName = lastName; 
-        this.relation = relation; 
         this.years = years; 
+        this.relation = relation; 
         this.comment = comment; 
-    }
-
-    public void logComment(String name) { 
-        commentHistory.add(name); 
+        this.timestamp = timestamp;
     }
 }
