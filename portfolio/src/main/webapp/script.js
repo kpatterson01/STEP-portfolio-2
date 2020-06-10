@@ -47,19 +47,77 @@ function addRandomFact() {
 
 /** Creates a map and adds it to the page. */
 function createMap() {
-  const map = new google.maps.Map(
-      document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+    const map = new google.maps.Map(
+        document.getElementById('map'),
+        {center: {lat: -33.91727341958453, lng: 151.23348314155578}, zoom: 16});
+        
+    /*const trexMarker = new google.maps.Marker({
+        position: {lat: 37.421903, lng: -122.084674},
+        map: map,
+        title: 'Stan the T-Rex'
+    });
+
+    const robMarker = new google.maps.Marker({
+        position: {lat: 40.238945, lng: -74.618499},
+        map: map,
+        title: 'Robbinsville HS'
+    });*/
+    
+    var icons = {
+        android: {
+            icon: 'images/android.png',
+            scaledSize: new google.maps.Size(14, 15), 
+            origin: new google.maps.Point(0,0), 
+            anchor: new google.maps.Point(0, 0) 
+        }
+    };
+
+    var favoritePlaces = [
+        { 
+        //Bagels and Cream 
+        position: new google.maps.LatLng(40.222896, -74.637021),
+        type: 'android'
+        },
+        {
+        //Disney World 
+        position: new google.maps.LatLng(28.385516, -81.563863),
+        type: 'android'
+        }, 
+        {
+        //Times Square 
+        position: new google.maps.LatLng(40.758153, -73.985575),
+        type: 'android'
+        }, 
+        {
+        //Golden Gate Bridge  
+        position: new google.maps.LatLng(37.820191, -122.478309),
+        type: 'android'
+        }, 
+        {
+        //Hampton University, My home by the Sea  
+        position: new google.maps.LatLng(37.022741, -76.334453),
+        type: 'android'
+        } 
+    ];
+
+     // Create markers.
+    for (var i = 0; i < favoritePlaces.length; i++) {
+        var marker = new google.maps.Marker({
+            position: favoritePlaces[i].position,
+            icon: icons[favoritePlaces[i].type].icon,
+            map: map
+        });
+    };
 }
 
 /**
  * Adds the object comment from the server 
  */
 function getComment() {
-  fetch('/comment').then(response => response.json()).then((comment) => {
-    document.getElementById('comment-container').appendChild(createListElement(comment));  
-    console.log(comment); 
-  });
+    fetch('/comment').then(response => response.json()).then((comment) => {
+        document.getElementById('comment-container').appendChild(createListElement(comment));  
+        console.log(comment); 
+    });
 }
 
 /**
