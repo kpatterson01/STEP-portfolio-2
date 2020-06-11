@@ -17,6 +17,7 @@ import com.google.sps.data.CommentData;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -37,13 +38,15 @@ public class DataServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        int displayNumComments = Integer.parseInt(request.getParameter("num")); 
+
         Query query = new Query("CommentData").addSort("timestamp", SortDirection.DESCENDING);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery results = datastore.prepare(query);
+        List<Entity> results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(displayNumComments));
 
-        List<CommentData> commentData = new ArrayList<>();
         
-        for (Entity entity : results.asIterable()) {
+        List<CommentData> commentData = new ArrayList<>();
+        for (Entity entity : results) {
             String firstName = (String) entity.getProperty("firstName");
             String lastName = (String) entity.getProperty("lastName");
             String years = (String) entity.getProperty("years");
@@ -69,7 +72,7 @@ public class DataServlet extends HttpServlet {
         String relation = request.getParameter("relation");
         String commentText = request.getParameter("comment-input");
         long timestamp = System.currentTimeMillis();
-
+        
         Entity taskEntity = new Entity("CommentData");
         taskEntity.setProperty("firstName", firstName);
         taskEntity.setProperty("lastName", lastName);
@@ -77,6 +80,7 @@ public class DataServlet extends HttpServlet {
         taskEntity.setProperty("relation", relation);
         taskEntity.setProperty("commentText", commentText);
         taskEntity.setProperty("timestamp", timestamp);
+        
 
         //Adds data to DataService allowing data to be accessed after server stops
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
