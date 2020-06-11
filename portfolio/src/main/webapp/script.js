@@ -114,11 +114,17 @@ function createMap() {
  * Adds the object comment from the server 
  */
 function getComment() {
-    fetch('/comment').then(response => response.json()).then((comment) => {
+    var value = document.getElementById("quantity").value; 
+    fetch('/comment?num='+value).then(response => response.json()).then((comment) => {
+        const parent = document.getElementById('comment-container');
+        while(parent.firstChild) {
+            parent.removeChild(parent.firstChild)
+        }
         document.getElementById('comment-container').appendChild(createListElement(comment));  
         console.log(comment); 
     });
 }
+
 
 /**
  * Creates an <div> element containing data from CommentData object 

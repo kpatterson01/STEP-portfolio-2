@@ -17,16 +17,16 @@
 
 #comment-section {
     background-color: lightgrey; 
+    height: 600px; 
 }
 
 .scroll-box {
     background: #f4f4f4;
     border: 2px solid rgba(0, 0, 0, 0.1);
-
     margin-left: auto; 
     margin-right: auto; 
     height: 300px; 
-    width: 900px; 
+    width: 1000px; 
     padding: 15px;
     overflow-y: scroll;
 }
@@ -34,7 +34,6 @@
 #comment-container {
     list-style-type: none;
     text-align: center;
-    background-color: rgb(216, 141, 141); 
 }
 
 #comment-container ul {
