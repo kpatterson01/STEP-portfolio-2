@@ -49,8 +49,8 @@ function addRandomFact() {
 function createMap() {
     const map = new google.maps.Map(
         document.getElementById('map'),
-        {center: {lat: -33.91727341958453, lng: 151.23348314155578}, zoom: 16});
-        
+        {center: {lat: 40.222896, lng: -74.637021}, zoom: 16});
+    var InfoObj = [];    
     /*const trexMarker = new google.maps.Marker({
         position: {lat: 37.421903, lng: -122.084674},
         map: map,
@@ -74,40 +74,115 @@ function createMap() {
 
     var favoritePlaces = [
         { 
-        //Bagels and Cream 
+        placeName: '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Bagels n\' Cream</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Bagels n\' Cream</b>, is one of my favorite places because they have the ' +
+                    '<b>BEST</b> bagels in New Jersey. My favorite bagel to buy here is the Blueberry Crunch Bagel '+
+                    'with cream cheese. It is a must buy! If you are ever in New Jersey, I definitely recommend '+
+                    'coming here and trying their bagels. See link below to see their menu! '+
+                    '<p><a href="https://bagelsncreamnj.com/"</a> '+
+                    'Visit Bagels n\' Cream.</p>'+
+                    '</div>'+
+                    '</div>', 
         position: new google.maps.LatLng(40.222896, -74.637021),
         type: 'android'
         },
         {
-        //Disney World 
+        placeName: '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Disney World</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Disney World</b>, has been a resort I have always fallen in love with. ' +
+                    'Established in 1965, Disney World has been known for its fun rides, the huge Cinderella Castle and '+
+                    'the place where Dreams are made of. Visiting Disney World as a little kid as always been on of '+
+                    'my favorites memories. Disney World is definitely one of my favorites places in the world. '+
+                    '</div>'+
+                    '</div>',   
         position: new google.maps.LatLng(28.385516, -81.563863),
         type: 'android'
         }, 
         {
-        //Times Square 
+        placeName: '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Times Square</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Disney World</b>, has been a resort I have always fallen in love with. ' +
+                    'Established in 1965, Disney World has been known for its fun rides, the huge Cinderella Castle and '+
+                    'the place where Dreams are made of. Visiting Disney World as a little kid as always been on of '+
+                    'my favorites memories. Disney World is definitely one of my favorites places in the world. '+
+                    '</div>'+
+                    '</div>',  
         position: new google.maps.LatLng(40.758153, -73.985575),
         type: 'android'
         }, 
         {
-        //Golden Gate Bridge  
+        placeName: '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Golden Gate Bridge</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Disney World</b>, has been a resort I have always fallen in love with. ' +
+                    'Established in 1965, Disney World has been known for its fun rides, the huge Cinderella Castle and '+
+                    'the place where Dreams are made of. Visiting Disney World as a little kid as always been on of '+
+                    'my favorites memories. Disney World is definitely one of my favorites places in the world. '+
+                    '</div>'+
+                    '</div>',  
         position: new google.maps.LatLng(37.820191, -122.478309),
         type: 'android'
         }, 
         {
-        //Hampton University, My home by the Sea  
+        placeName: '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">Hampton University, My home by the Sea</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>Disney World</b>, has been a resort I have always fallen in love with. ' +
+                    'Established in 1965, Disney World has been known for its fun rides, the huge Cinderella Castle and '+
+                    'the place where Dreams are made of. Visiting Disney World as a little kid as always been on of '+
+                    'my favorites memories. Disney World is definitely one of my favorites places in the world. '+
+                    '</div>'+
+                    '</div>',  
         position: new google.maps.LatLng(37.022741, -76.334453),
         type: 'android'
         } 
     ];
-
+    var counter = 0; 
      // Create markers.
     for (var i = 0; i < favoritePlaces.length; i++) {
-        var marker = new google.maps.Marker({
+        var contentString = favoritePlaces[i].placeName; 
+
+        const marker = new google.maps.Marker({
             position: favoritePlaces[i].position,
             icon: icons[favoritePlaces[i].type].icon,
             map: map
         });
+
+        const infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        marker.addListener('click', function() {
+            counter++; 
+            closeInfoWindow(); 
+            infowindow.open(map, marker);
+            InfoObj[0] = infowindow; 
+            console.log("User has clicked " + counter); 
+        });
+
     };
+    //Refreshes info window to display for the current marker 
+    function closeInfoWindow() {
+        if (InfoObj.length > 0) {
+            InfoObj[0].set("marker", null); 
+            InfoObj[0].close(); 
+            InfoObj[0].length = 0;
+        }
+    }
 }
 
 /**
