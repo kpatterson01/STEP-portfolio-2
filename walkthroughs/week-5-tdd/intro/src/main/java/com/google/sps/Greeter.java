@@ -21,7 +21,14 @@ public class Greeter {
   /**
    * Returns a greeting for the given name.
    */
+  String newStr = ""; 
   public String greet(String name) {
-    return "Hello " + name;
+    //Checks for symbols using the ASCII number representation
+    for (int i = 0; i < name.length(); i++) {
+        if (name.charAt(i) > 64 && name.charAt(i) <= 122) {
+            newStr+= name.charAt(i); 
+        } 
+    }
+    return "Hello " + newStr.trim();
   }
 }
