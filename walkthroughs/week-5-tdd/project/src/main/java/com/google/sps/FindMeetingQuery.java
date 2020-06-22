@@ -27,18 +27,18 @@ public final class FindMeetingQuery {
       same exact attendees
     2. Once have attendee, get the TimeRange for their event and store it in meetingConflicts array
     3. if the request duration is > the whole day return an empty avability list, 
-       if there are no meeting conflicts return the whole day in the avaibility list  
+       if there are no meeting conflicts return the whole day in the availability list  
     4. else find the overlaps of the time ranges and merge them together 
         5. for meetingConflicts size() 
             6. if time ranges overlap set smaller time range and largest time range as new meetign conflict 
-            7. else if it does not overlap add the time gap to avaibility list only if the gap duration
+            7. else if it does not overlap add the time gap to availability list only if the gap duration
                is larger than meeting request 
-    8. return avaibility list 
+    8. return availability list 
     
     Time Complexity: O(n^2) 
     */
     ArrayList<TimeRange> meetingConflicts = new ArrayList<TimeRange>(); 
-    ArrayList<TimeRange> avaibility = new ArrayList<TimeRange>(); 
+    ArrayList<TimeRange> availability = new ArrayList<TimeRange>(); 
 
     //Adds meeting conflicts to meetingConficts ArrayList  
     for (Event getEvent : events) {
@@ -50,21 +50,21 @@ public final class FindMeetingQuery {
     }
 
     if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) { //if request duration is larger than whole day return an empty array 
-        return avaibility; 
+        return availability; 
     } else if (meetingConflicts.isEmpty()) { //else if meeting conflicts are empty then return the whole day 
-        avaibility.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true)); 
-        return avaibility; 
+        availability.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true)); 
+        return availability; 
     } else { //else merge the overlapping time ranges and find the gaps inbetween 
-        TimeRange avaibilityStart;
+        TimeRange availabilityStart;
         if (meetingConflicts.get(0).start() != 0) { 
-            avaibilityStart = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, meetingConflicts.get(0).start(), false); 
+            availabilityStart = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, meetingConflicts.get(0).start(), false); 
         } else {
-            avaibilityStart = TimeRange.fromStartEnd(meetingConflicts.get(0).end(), meetingConflicts.get(1).start(), false); 
+            availabilityStart = TimeRange.fromStartEnd(meetingConflicts.get(0).end(), meetingConflicts.get(1).start(), false); 
         }
 
-        //Check the avaibilityStart and see if the duration is >= the request duration
-        if (avaibilityStart.duration() >= request.getDuration()) {
-            avaibility.add(avaibilityStart); 
+        //Check the availabilityStart and see if the duration is >= the request duration
+        if (availabilityStart.duration() >= request.getDuration()) {
+            availability.add(availabilityStart); 
         }
 
         //Merging Time conflicts together      
@@ -90,23 +90,23 @@ public final class FindMeetingQuery {
                 }
                 meetingConflicts.set(i, TimeRange.fromStartEnd(earliestStart.start(), laterEnd.end(), false)); 
         
-            } else { //Add avaibility gap if the duration fits 
+            } else { //Add availability gap if the duration fits 
                 if (request.getDuration() <= currentConflict.start() - prevConflict.end()) {
-                    avaibility.add(TimeRange.fromStartEnd(prevConflict.end(), currentConflict.start(), false)); 
+                    availability.add(TimeRange.fromStartEnd(prevConflict.end(), currentConflict.start(), false)); 
                 } 
             }         
         }
         //Set end time if meeting request fits the duration 
-        TimeRange avaibilityEnd = TimeRange.fromStartEnd(meetingConflicts.get(meetingConflicts.size() - 1).end(), TimeRange.END_OF_DAY, true); 
-        if (avaibilityEnd.duration() >= request.getDuration() && avaibilityEnd.end() != TimeRange.END_OF_DAY) {
-            avaibility.add(avaibilityEnd); 
+        TimeRange availabilityEnd = TimeRange.fromStartEnd(meetingConflicts.get(meetingConflicts.size() - 1).end(), TimeRange.END_OF_DAY, true); 
+        if (availabilityEnd.duration() >= request.getDuration() && availabilityEnd.end() != TimeRange.END_OF_DAY) {
+            availability.add(availabilityEnd); 
         }
 
         //Deletes Duplicates and then add to a new ArrayList 
         LinkedHashSet<TimeRange> noDuplicates = new LinkedHashSet<>();
-        noDuplicates.addAll(avaibility); 
-        ArrayList<TimeRange> avabilityNoDuplicates = new ArrayList<>(noDuplicates); 
-        return avabilityNoDuplicates; 
+        noDuplicates.addAll(availability); 
+        ArrayList<TimeRange> availabilityNoDuplicates = new ArrayList<>(noDuplicates); 
+        return availabilityNoDuplicates; 
     }
           
   }
