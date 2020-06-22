@@ -14,10 +14,12 @@
 
 package com.google.sps;
 
-import java.util.Collection;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet; 
 
 public final class FindMeetingQuery {
@@ -39,7 +41,7 @@ public final class FindMeetingQuery {
     */
     ArrayList<TimeRange> meetingConflicts = new ArrayList<TimeRange>(); 
     ArrayList<TimeRange> availability = new ArrayList<TimeRange>(); 
-
+    System.out.println("this is a test"); 
     //Adds meeting conflicts to meetingConficts ArrayList  
     for (Event getEvent : events) {
         for (String findAttendee : getEvent.getAttendees()) {
@@ -49,6 +51,22 @@ public final class FindMeetingQuery {
         }
     }
 
+    for (Event getEvent : events) {
+        for (String optionalAttendee : getEvent.getAttendees()) {
+            if (request.getOptionalAttendees().contains(optionalAttendee) && 
+                                                    !(getEvent.getWhen().duration() >= TimeRange.WHOLE_DAY.duration()) &&
+                                                    !(getEvent.getWhen().duration() < request.getDuration())) {
+                System.out.println("Optional Time Conflict:" + getEvent.getWhen().toString()); 
+                meetingConflicts.add(getEvent.getWhen());
+            } 
+        }
+    }
+
+    //Sort array because optional event was added at the end 
+    Collections.sort(meetingConflicts, TimeRange.ORDER_BY_START);
+    
+    System.out.println("time conflicts: " + Arrays.toString(meetingConflicts.toArray())); 
+   
     if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) { //if request duration is larger than whole day return an empty array 
         return availability; 
     } else if (meetingConflicts.isEmpty()) { //else if meeting conflicts are empty then return the whole day 
@@ -106,11 +124,10 @@ public final class FindMeetingQuery {
         LinkedHashSet<TimeRange> noDuplicates = new LinkedHashSet<>();
         noDuplicates.addAll(availability); 
         ArrayList<TimeRange> availabilityNoDuplicates = new ArrayList<>(noDuplicates); 
+        System.out.println("Availability:" + Arrays.toString(availabilityNoDuplicates.toArray())); 
         return availabilityNoDuplicates; 
-    }
-          
+    }     
   }
-  
 }
 
 /*Things to Improve 
