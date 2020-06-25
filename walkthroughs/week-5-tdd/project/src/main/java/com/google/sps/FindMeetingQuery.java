@@ -37,7 +37,7 @@ public final class FindMeetingQuery {
                 is larger than meeting request 
         8. return availability list 
         
-        Time Complexity: O(N) 
+        Time Complexity: O(N log N) 
         */
         ArrayList<TimeRange> meetingConflicts = new ArrayList<TimeRange>(); 
         ArrayList<TimeRange> availability = new ArrayList<TimeRange>(); 
@@ -52,8 +52,8 @@ public final class FindMeetingQuery {
         //Adds meeting conflicts of optional attendees
         for (Event getEvent : events) { 
             if (request.getOptionalAttendees().containsAll(getEvent.getAttendees()) && 
-                                                        !(getEvent.getWhen().duration() >= TimeRange.WHOLE_DAY.duration()) &&
-                                                        !(getEvent.getWhen().duration() < request.getDuration())) {
+                                                        getEvent.getWhen().duration() < TimeRange.WHOLE_DAY.duration() &&
+                                                        getEvent.getWhen().duration() >= request.getDuration()) {
                 meetingConflicts.add(getEvent.getWhen());
             }
         }
@@ -137,6 +137,6 @@ public final class FindMeetingQuery {
     - For instance, I could've used a LinkedHashSet to store my time conflcits 
       and then iterate through the set and then return the arraylist at the end 
 - Work on the Time Complexity 
-    - Currently, I was able to get it from O(N^2) to O(N) 
+    - Currently, I was able to get it from O(N^2) to O(N log N) 
     - Would like to work towards O(log N) 
 */
