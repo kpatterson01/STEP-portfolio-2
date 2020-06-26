@@ -37,29 +37,24 @@ public final class FindMeetingQuery {
                 is larger than meeting request 
         8. return availability list 
         
-        Time Complexity: O(n^2) 
+        Time Complexity: O(N log N) 
         */
         ArrayList<TimeRange> meetingConflicts = new ArrayList<TimeRange>(); 
         ArrayList<TimeRange> availability = new ArrayList<TimeRange>(); 
 
         //Adds meeting conflicts of required attendees   
-        for (Event getEvent : events) {
-            for (String findAttendee : getEvent.getAttendees()) {
-                if (request.getAttendees().contains(findAttendee)) {
-                    meetingConflicts.add(getEvent.getWhen());
-                } 
+        for (Event getEvent : events) { 
+            if (request.getAttendees().containsAll(getEvent.getAttendees())) { 
+                meetingConflicts.add(getEvent.getWhen());
             }
         }
 
-        //Adds meeting conflicts of optional attendees 
-        for (Event getEvent : events) {
-            for (String optionalAttendee : getEvent.getAttendees()) {
-                if (request.getOptionalAttendees().contains(optionalAttendee) && 
-                                                        !(getEvent.getWhen().duration() >= TimeRange.WHOLE_DAY.duration()) &&
-                                                        !(getEvent.getWhen().duration() < request.getDuration())) {
-                    System.out.println("Optional Time Conflict:" + getEvent.getWhen().toString()); 
-                    meetingConflicts.add(getEvent.getWhen());
-                } 
+        //Adds meeting conflicts of optional attendees
+        for (Event getEvent : events) { 
+            if (request.getOptionalAttendees().containsAll(getEvent.getAttendees()) && 
+                                                        getEvent.getWhen().duration() < TimeRange.WHOLE_DAY.duration() &&
+                                                        getEvent.getWhen().duration() >= request.getDuration()) {
+                meetingConflicts.add(getEvent.getWhen());
             }
         }
 
@@ -137,12 +132,11 @@ public final class FindMeetingQuery {
 }
 
 
-    
-
 /*Things to Improve 
 - Find the duplicates in the beginning and not the end 
     - For instance, I could've used a LinkedHashSet to store my time conflcits 
       and then iterate through the set and then return the arraylist at the end 
-- Time Complexity is currently O(N^2), I can definitely improve on this by searching
-through the Time Conflicts differntly 
+- Work on the Time Complexity 
+    - Currently, I was able to get it from O(N^2) to O(N log N) 
+    - Would like to work towards O(log N) 
 */
